@@ -1,5 +1,148 @@
 <h1 class="mt-4">Dashboard</h1>
 
-<p class="lead mb-3">Welcome <%= user.name %></p>
+<p class="lead mb-3">
+  Welcome <%= mongoData.user.name %> <%=mongoData.proposal%>
+</p>
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a
+      class="nav-link active"
+      id="proposal-tab"
+      data-toggle="tab"
+      href="#proposal"
+      role="tab"
+      aria-controls="proposal"
+      aria-selected="true"
+      >Proposal</a
+    >
+  </li>
+  <li class="nav-item">
+    <a
+      class="nav-link"
+      id="profile-tab"
+      data-toggle="tab"
+      href="#profile"
+      role="tab"
+      aria-controls="profile"
+      aria-selected="false"
+      >InProgress</a
+    >
+  </li>
+  <li class="nav-item">
+    <a
+      class="nav-link"
+      id="contact-tab"
+      data-toggle="tab"
+      href="#contact"
+      role="tab"
+      aria-controls="contact"
+      aria-selected="false"
+      >Sold</a
+    >
+  </li>
+  <li class="nav-item">
+    <a
+      class="nav-link"
+      id="cancel-tab"
+      data-toggle="tab"
+      href="#cancel"
+      role="tab"
+      aria-controls="cancel"
+      aria-selected="false"
+      >Canceld</a
+    >
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div
+    class="tab-pane fade show active"
+    id="proposal"
+    role="tabpanel"
+    aria-labelledby="proposal-tab"
+  >
+    <table class="table table-dark">
+      <thead>
+        <tr>
+          <th scope="col">First</th>
+          <th scope="col">Last</th>
+          <th scope="col">Mail</th>
+          <th scope="col">Prod</th>
+          <th scope="col">Trans</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%mongoData.proposal.forEach(element=>{%>
+        <tr>
+          <th scope="row">1</th>
+          <td><%=element.Vorname%></td>
+          <td><%=element.Name%></td>
+          <td><%=element.Email%></td>
+          <td><%=element.ProductName%></td>
+          <td>
+            <select class="form-control match-content">
+              <option selected="">InProgress</option>
+              <option>Proposal</option>
+              <option>Cancel</option>
+            </select>
+          </td>
+        </tr>
+        <%});%>
+      </tbody>
+    </table>
+  </div>
+  <div
+    class="tab-pane fade"
+    id="profile"
+    role="tabpanel"
+    aria-labelledby="profile-tab"
+  >
+    <table class="table table-dark">
+      <thead>
+        <tr>
+          <th scope="col">First</th>
+          <th scope="col">Last</th>
+          <th scope="col">Mail</th>
+          <th scope="col">Prod</th>
+          <th scope="col">Trans</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%mongoData.proposal.forEach(element=>{%>
+        <tr>
+          <th scope="row">1</th>
+          <td><%=element.Vorname%></td>
+          <td><%=element.Name%></td>
+          <td><%=element.Email%></td>
+          <td><%=element.ProductName%></td>
+          <td>
+            <select class="form-control match-content">
+              <option selected="">InProgress</option>
+              <option>Proposal</option>
+              <option>Cancel</option>
+            </select>
+          </td>
+        </tr>
+        <%});%>
+      </tbody>
+    </table>
+  </div>
+  <div
+    class="tab-pane fade"
+    id="contact"
+    role="tabpanel"
+    aria-labelledby="contact-tab"
+  >
+    ...
+  </div>
+  <div
+    class="tab-pane fade"
+    id="cancel"
+    role="tabpanel"
+    aria-labelledby="cancel-tab"
+  >
+    ...
+  </div>
+</div>
 
 <a href="/users/logout" class="btn btn-secondary">Logout</a>

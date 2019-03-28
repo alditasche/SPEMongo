@@ -9,9 +9,23 @@ const bcrypt = require('bcryptjs');
 // Load User model
 
 const User = require('../models/User');
-
-
-
+const Proposal = require('../models/Proposals');
+const InProgress = require('../models/InProgress');
+async function getMongoData(email) {
+    try {
+      user = await User.findOne({email: email})
+      proposal = await Proposal.find({});
+      inprogress = await InProgress.find({});
+      return mongoData = {
+        user: user,
+        proposal: proposal,
+        inprogress: inprogress
+      }
+    }
+    catch (err) {
+      console.log(err);
+    }
+  }
 module.exports = function(passport) {
 
   passport.use(
@@ -20,13 +34,9 @@ module.exports = function(passport) {
 
       // Match user
 
-      User.findOne({
+      getMongoData(email).then(mongoData => {
 
-        email: email
-
-      }).then(user => {
-
-        if (!user) {
+        if (!mongoData.user) {
 
           return done(null, false, { message: 'Diese Mail wurde nicht regristriert' });
 
@@ -36,18 +46,15 @@ module.exports = function(passport) {
 
         // Match password
 
-        bcrypt.compare(password, user.password, (err, isMatch) => {
+        bcrypt.compare(password, mongoData.user.password, (err, isMatch) => {
 
           if (err) throw err;
 
           if (isMatch) {
-
-            return done(null, user);
-
+                console.log("hi"+mongoData.proposal);
+                return done(null, mongoData);
           } else {
-
             return done(null, false, { message: 'Sie haben ein falsches Passwort eingegeben' });
-
           }
 
         });
@@ -60,9 +67,9 @@ module.exports = function(passport) {
 
 
 
-  passport.serializeUser(function(user, done) {
+  passport.serializeUser(function(mongoData, done) {
 
-    done(null, user.id);
+    done(null, mongoData.user.id);
 
   });
 
@@ -72,7 +79,7 @@ module.exports = function(passport) {
 
     User.findById(id, function(err, user) {
 
-      done(err, user);
+      done(err, mongoData);
 
     });
 
