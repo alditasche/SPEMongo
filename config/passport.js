@@ -11,15 +11,21 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 const Proposal = require('../models/Proposals');
 const InProgress = require('../models/InProgress');
+const Cancel = require('../models/Cancel');
+const Sold = require('../models/Sold')
 async function getMongoData(email) {
     try {
       user = await User.findOne({email: email})
       proposal = await Proposal.find({});
       inprogress = await InProgress.find({});
+      cancel = await Cancel.find({});
+      sold = await Sold.find({});
       return mongoData = {
         user: user,
         proposal: proposal,
-        inprogress: inprogress
+        inprogress: inprogress,
+        cancel: cancel,
+        sold: sold
       }
     }
     catch (err) {
@@ -51,7 +57,7 @@ module.exports = function(passport) {
           if (err) throw err;
 
           if (isMatch) {
-                console.log("hi"+mongoData.proposal);
+                console.log("hi"+JSON.stringify(mongoData));
                 return done(null, mongoData);
           } else {
             return done(null, false, { message: 'Sie haben ein falsches Passwort eingegeben' });

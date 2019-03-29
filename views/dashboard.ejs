@@ -1,7 +1,8 @@
+
 <h1 class="mt-4">Dashboard</h1>
 
 <p class="lead mb-3">
-  Welcome <%= mongoData.user.name %> <%=mongoData.proposal%>
+  Welcome <%= mongoData.user.name %> 
 </p>
 
 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -20,11 +21,11 @@
   <li class="nav-item">
     <a
       class="nav-link"
-      id="profile-tab"
+      id="inprogress-tab"
       data-toggle="tab"
-      href="#profile"
+      href="#inprogress"
       role="tab"
-      aria-controls="profile"
+      aria-controls="inprogress"
       aria-selected="false"
       >InProgress</a
     >
@@ -32,11 +33,11 @@
   <li class="nav-item">
     <a
       class="nav-link"
-      id="contact-tab"
+      id="sold-tab"
       data-toggle="tab"
-      href="#contact"
+      href="#sold"
       role="tab"
-      aria-controls="contact"
+      aria-controls="sold"
       aria-selected="false"
       >Sold</a
     >
@@ -80,9 +81,9 @@
           <td><%=element.Email%></td>
           <td><%=element.ProductName%></td>
           <td>
-            <select class="form-control match-content">
-              <option selected="">InProgress</option>
-              <option>Proposal</option>
+            <select class="form-control match-content" name="status" id=<%=element._id%>>
+              <option selected="">Proposal</option>
+              <option>In Bearbeitung</option>
               <option>Cancel</option>
             </select>
           </td>
@@ -93,9 +94,9 @@
   </div>
   <div
     class="tab-pane fade"
-    id="profile"
+    id="inprogress"
     role="tabpanel"
-    aria-labelledby="profile-tab"
+    aria-labelledby="inprogress-tab"
   >
     <table class="table table-dark">
       <thead>
@@ -108,7 +109,7 @@
         </tr>
       </thead>
       <tbody>
-        <%mongoData.proposal.forEach(element=>{%>
+        <%mongoData.inprogress.forEach(element=>{%>
         <tr>
           <th scope="row">1</th>
           <td><%=element.Vorname%></td>
@@ -116,10 +117,10 @@
           <td><%=element.Email%></td>
           <td><%=element.ProductName%></td>
           <td>
-            <select class="form-control match-content">
-              <option selected="">InProgress</option>
-              <option>Proposal</option>
-              <option>Cancel</option>
+            <select class="form-control match-content"name="InProgresStatus"id=<%=element._id%>>
+              <option selected="">In Bearbeitung</option>
+              <option>Verkauft</option>
+              <option>Abgebrochen</option>
             </select>
           </td>
         </tr>
@@ -129,11 +130,37 @@
   </div>
   <div
     class="tab-pane fade"
-    id="contact"
+    id="sold"
     role="tabpanel"
-    aria-labelledby="contact-tab"
+    aria-labelledby="sold-tab"
   >
-    ...
+  <table class="table table-dark">
+        <thead>
+          <tr>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Mail</th>
+            <th scope="col">Prod</th>
+            <th scope="col">Trans</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%mongoData.sold.forEach(element=>{%>
+          <tr>
+            <th scope="row">1</th>
+            <td><%=element.Vorname%></td>
+            <td><%=element.Name%></td>
+            <td><%=element.Email%></td>
+            <td><%=element.ProductName%></td>
+            <td>
+              <select class="form-control match-content"id=<%=element._id%>>
+                <option selected="">Verkauft</option>
+              </select>
+            </td>
+          </tr>
+          <%});%>
+        </tbody>
+      </table>
   </div>
   <div
     class="tab-pane fade"
@@ -141,8 +168,36 @@
     role="tabpanel"
     aria-labelledby="cancel-tab"
   >
-    ...
+  <table class="table table-dark">
+        <thead>
+          <tr>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Mail</th>
+            <th scope="col">Prod</th>
+            <th scope="col">Trans</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%mongoData.cancel.forEach(element=>{%>
+          <tr>
+            <th scope="row">1</th>
+            <td><%=element.Vorname%></td>
+            <td><%=element.Name%></td>
+            <td><%=element.Email%></td>
+            <td><%=element.ProductName%></td>
+            <td>
+              <select class="form-control match-content"id=<%=element._id%>>
+                <option selected="">Abgebrochen</option>
+              </select>
+            </td>
+          </tr>
+          <%});%>
+        </tbody>
+      </table>
   </div>
 </div>
-
+<a class="btn btn-primary" onclick="save()">save</a>
 <a href="/users/logout" class="btn btn-secondary">Logout</a>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<script type="text/javascript" src="/js/tablesystem.js"></script>

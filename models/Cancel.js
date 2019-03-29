@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const InProgressSchema = new mongoose.Schema({
+const CancelSchema = new mongoose.Schema({
 
 
   Name: {
@@ -26,6 +26,6 @@ const InProgressSchema = new mongoose.Schema({
 
 });
 
-var InProgress = mongoose.model('inprogress', InProgressSchema);
+var Cancel = mongoose.model('cancels', CancelSchema);
 
-module.exports = InProgress;
+module.exports = Cancel;

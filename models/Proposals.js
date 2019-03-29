@@ -21,7 +21,7 @@ const ProposalSchema = new mongoose.Schema({
   ProductName: {
     type: String,
     required: true
-  },
+  }
 
 
 });

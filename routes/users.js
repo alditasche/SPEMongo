@@ -9,6 +9,10 @@ const passport = require("passport");
 // Load User model
 
 const User = require("../models/User");
+var Sold = require("../models/Sold");
+var Cancel = require("../models/Cancel");
+var InProgress = require("../models/InProgress");
+var Proposal = require("../models/Proposals");
 
 // Login Page
 
@@ -104,6 +108,121 @@ router.get("/logout", (req, res) => {
   req.logout();
   req.flash("success_msg", "You are logged out");
   res.redirect("/users/login");
+});
+
+router.post('/proposal', function (req, res) {
+
+  
+
+  // response = {
+  //   Vorname: req.body.vName,
+  //   Nachname: req.body.nName,
+  //   Email: req.body.email,
+  //   ProductName: req.body.Produkt
+  // };
+  // var newProposal = Proposal(response);
+  // newProposal.save(function (err) {
+  //   if (err) return handleError(err);
+  //   console.log("saved");
+  //   // saved!
+  // });
+  // console.log(req.body);
+  // res.redirect("/");
+});
+router.post('/change2inprogress', function(req, res){
+   Proposal.findById( req.body.id).then( result =>{
+
+    let swap = new InProgress({
+      Name: result.Name,
+      Vorname: result.Vorname,
+      Email: result.Email,
+       ProductName: result.ProductName
+    })
+    
+    
+
+     result.remove();
+     swap.save();
+     Sold = require("../models/Sold");
+     Cancel = require("../models/Cancel");
+     InProgress = require("../models/InProgress");
+     Proposal = require("../models/Proposals");
+     // swap is now in a better place
+     res.redirect("/dashboard");
+   });
+
+});
+router.post('/change2sold', function(req, res){
+  InProgress.findById( req.body.id).then( result =>{
+
+    let swap = new Sold({
+      Name: result.Name,
+      Vorname: result.Vorname,
+      Email: result.Email,
+       ProductName: result.ProductName
+    })
+    
+    
+
+     result.remove();
+     swap.save();
+     Sold = require("../models/Sold");
+     Cancel = require("../models/Cancel");
+     InProgress = require("../models/InProgress");
+     Proposal = require("../models/Proposals");
+     // swap is now in a better place
+     res.redirect("/dashboard");
+   });
+});
+router.post('/change2cancel', function(req, res){
+  if(req.body.origin == "salesproposals"){
+    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!");
+    Proposal.findById( req.body.id).then( result =>{
+
+      let swap = new Cancel({
+        Name: result.Name,
+        Vorname: result.Vorname,
+        Email: result.Email,
+         ProductName: result.ProductName
+      })
+      
+      
+  
+       result.remove();
+       swap.save();
+       Sold = require("../models/Sold");
+       Cancel = require("../models/Cancel");
+       InProgress = require("../models/InProgress");
+       Proposal = require("../models/Proposals");
+        res.redirect("/dashboard");
+       // swap is now in a better place
+  
+     });
+  }else{
+    console.log("________________________________________________");
+    InProgress.findById( req.body.id).then( result =>{
+
+      let swap = new Cancel({
+        Name: result.Name,
+        Vorname: result.Vorname,
+        Email: result.Email,
+         ProductName: result.ProductName
+      })
+      
+      
+  
+       result.remove();
+       swap.save();
+        Sold = require("../models/Sold");
+        Cancel = require("../models/Cancel");
+        InProgress = require("../models/InProgress");
+        Proposal = require("../models/Proposals");
+        
+
+       // swap is now in a better place
+  
+     });
+  }
 });
 
 module.exports = router;

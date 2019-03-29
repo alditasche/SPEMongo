@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const InProgressSchema = new mongoose.Schema({
+const ProposalSchema = new mongoose.Schema({
 
 
   Name: {
@@ -26,6 +26,6 @@ const InProgressSchema = new mongoose.Schema({
 
 });
 
-var InProgress = mongoose.model('inprogress', InProgressSchema);
+var Sold = mongoose.model('solds', ProposalSchema);
 
-module.exports = InProgress;
+module.exports = Sold;
